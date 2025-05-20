@@ -11,11 +11,16 @@ const MFE1 = React.lazy(() =>
 );
 
 function App() {
+  const handler = (e) => console.log("Evento 'addItem' recebido:", e.detail);
+
   useEffect(() => {
-    window.addEventListener("addItem", (e) => {
-      console.log("Evento 'addItem' recebido:", e.detail);
-    });
-  },[])
+    window.addEventListener("addItem", handler);
+
+    return () => {
+      window.removeEventListener("addItem", handler);
+    };
+  }, []);
+
   return (
     <>
       <nav className="navbar bg-body-tertiary">
